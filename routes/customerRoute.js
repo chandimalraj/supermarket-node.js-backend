@@ -1,5 +1,7 @@
 const router = require("express").Router();
 let Customer = require("../models/Customer");
+const jwt = require('jsonwebtoken');
+require("dotenv").config()
 
 // Middleware function
 const logRequest = (req, res, next) => {
@@ -113,4 +115,46 @@ router.route("/login").post((req, res) => {
   }
 });
 
+const posts = [{
+  "name":"chandimal",
+  "post_id":1
+},
+{
+  "name":"prabath",
+  "post_id":2
+
+}]
+
+router.route("/login-test").post((req,res)=>{
+  const username = req.body.uname;
+  const user = {name:username}
+  //asume that user authentication process is done
+
+  //then create JWT token
+  const accessToken= jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{ expiresIn: '1m' })
+  res.json({accessToken:accessToken})
+})
+
+function authenticateToken(req,res,next){
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if(token == null){
+    return res.sendStatus(401)
+  }
+  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
+    if(err){
+      return res.sendStatus(403)
+    }
+    req.user = user
+    next()
+  })
+
+}
+
+router.route("/posts").get(authenticateToken, (req,res)=>{
+  const user = req.user.name
+ 
+ res.json("awa")
+
+})
 module.exports = router;
