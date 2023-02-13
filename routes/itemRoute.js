@@ -20,25 +20,30 @@ router.route("/").get((req, res) => {
 
 router.route("/save").post((req, res) => {
 
-  const itemid = req.body.id;
-  const itemname = req.body.itemname;
-  const itemimage = req.body.itemimg;
+  const item_id = req.body.id;
+  const item_name = req.body.itemname;
+  const measuring_unit = req.body.measuringunit
+  const item_size = req.body.size
+  const item_image = req.body.itemimg;
   const catogery = req.body.catogery;
   const company = req.body.company;
   const description = req.body.description;
-  const saleprice = req.body.saleprice;
-  const sellingprice = req.body.sellingprice;
+  const sale_price = req.body.saleprice;
+  const selling_price = req.body.sellingprice;
   const quantity = req.body.quantity;
   const active = req.body.active
   //create item object using item model
   const item = new Item({
-    itemid,
-    itemname,
+    item_id,
+    item_name,
+    measuring_unit,
+    item_size,
+    item_image,
     catogery,
     company,
     description,
-    saleprice,
-    sellingprice,
+    sale_price,
+    selling_price,
     quantity,
     active
 }

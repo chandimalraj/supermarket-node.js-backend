@@ -3,16 +3,27 @@ const Schema = mongoose.Schema;
 
 
 const itemSchema = new Schema({
-   itemid:{
+   item_id:{
         type:String,
         required:true
     },
-    itemname:{
+    item_name:{
         type:String,
         required:true
 
     },
-    itemimage:{
+    measuring_unit:{
+        type:String,
+        required:true
+
+    },
+    item_size:{
+        type:String,
+        required:true
+
+    },
+
+    item_image:{
         type:String,
         required:false
     },
@@ -28,11 +39,11 @@ const itemSchema = new Schema({
         type:String,
         required:true
     },
-    saleprice:{
+    sale_price:{
         type:Number,
         required:true
     },
-    sellingprice:{
+    selling_price:{
         type:Number,
         required:true
     },
