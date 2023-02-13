@@ -1,24 +1,28 @@
 const router = require("express").Router();
 let Customer = require("../models/Customer");
 const jwt = require('jsonwebtoken');
+
+
 require("dotenv").config()
 
 // Middleware function
-const logRequest = (req, res, next) => {
-  console.log(`Received a ${req.method} request to ${req.originalUrl}`);
-  next();
-};
+// const logRequest = (req, res, next) => {
+//   console.log(`Received a ${req.method} request to ${req.originalUrl}`);
+//   next();
+// };
 
 // Use the middleware function on all routes
-router.use(logRequest);
+//router.use(logRequest);
 
 // Define other routes and handlers
 router.route("/").get((req, res) => {
   res.send("Hello, World!");
 });
 
+
 //customer registration
 router.route("/register").post((req, res) => {
+  
   //get user details from request
   const username = req.body.username;
   const email = req.body.email;
@@ -88,11 +92,14 @@ router.route("/login").post((req, res) => {
     const query = { phone: id };
     Customer.find(query, (error, user) => {
       if (error) {
-        console.error(error);
+        console.error(error);  
       } else {
         console.log(user);
         if (user[0].pword == password) {
+         
+          res.setHeader('Set-Cookie', 'my-cookie=hi buddy')
           res.json("user verified");
+          
         } else {
           res.json("password incorrect");
         }
@@ -106,9 +113,10 @@ router.route("/login").post((req, res) => {
       } else {
         console.log(user);
         if (user[0].pword == password) {
+          
           res.json("user verified");
         } else {
-          res.json("password incorrect");
+          res.json("password incorrect"); 
         }
       }
     });
